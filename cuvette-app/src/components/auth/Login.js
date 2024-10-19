@@ -6,13 +6,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Login = ({ triggerToast }) => {
-  const apiUrl = "https://cuvette-20ky.onrender.com";
+  const apiUrl = "https://cuvette-20ky.onrender.com/";
   const navigate = useNavigate();
 
   const [emailLoading, setEmailLoading] = useState(false);
   const [otpLoading, setOtpLoading] = useState(false);
 
-  const [email, setEmail] = useState("");
+  const [emailOTP, setEmailOTP] = useState("");
   const [phone, setPhone] = useState("");
   const [emailVerified, setEmailVerified] = useState(false);
   const [phoneVerified, setPhoneVerified] = useState(false);
@@ -20,11 +20,15 @@ const Login = ({ triggerToast }) => {
 
   const companyId = localStorage.getItem("comp_id");
 
+  console.log(emailOTP);
+
   // Email verification function
-  const handleEmailVerification = async () => {
+  const handleEmailVerification = async (otp) => {
     setEmailLoading(true);
     try {
-      const response = await axios.get(`${apiUrl}/verify-email/${companyId}`);
+      const response = await axios.post(`${apiUrl}/verify-email/${companyId}`, {
+        otp: emailOTP,
+      });
       if (response.data.isEmailVerified) {
         setEmailVerified(true);
         triggerToast("Email verified successfully!", "success");
@@ -79,25 +83,20 @@ const Login = ({ triggerToast }) => {
 
   // Effect for navigating upon successful verification
   useEffect(() => {
+    // const token = localStorage.getItem("token");
+
     if (emailVerified && phoneVerified) {
       triggerToast("Success! Both email and phone are verified.", "success");
       navigate("/dashboard");
     }
   }, [emailVerified, phoneVerified, navigate, triggerToast]);
 
-  const token = localStorage.getItem("token");
-
-  // If token exists, redirect to the dashboard
-  if (token) {
-    return navigate("/dashboard");
-  }
-
   return (
     <div className="flex flex-col justify-start p-6 lg:px-8 scale-75 md:scale-100 w-full h-full items-center md:justify-center">
       <div className="flex flex-col items-center justify-center gap-4 border-[1px] border-purple-400 rounded-md p-6">
         <div className="text-center">
           <h3 className="font-medium text-2xl">Sign In</h3>
-          <p className="text-xs">Please Sign In to continue.</p>
+          <p className="text-xs">Please enter OTP to continue.</p>
         </div>
         <form onSubmit={(e) => e.preventDefault()}>
           <div className="flex flex-col w-full gap-4">
@@ -108,9 +107,9 @@ const Login = ({ triggerToast }) => {
                 <input
                   type="text"
                   name="email"
-                  placeholder="Email Verification"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email OTP"
+                  value={emailOTP}
+                  onChange={(e) => setEmailOTP(e.target.value)}
                   className="w-full p-1 focus:outline-none bg-inherit rounded-md"
                   disabled={emailVerified || emailLoading}
                 />
@@ -137,7 +136,7 @@ const Login = ({ triggerToast }) => {
                 <input
                   type="text"
                   name="phone"
-                  placeholder="Phone (Enter OTP)"
+                  placeholder="Mobile Enter OTP"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="w-full p-1 focus:outline-none bg-inherit rounded-md"

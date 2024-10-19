@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const sendVerificationEmail = async (email, verificationLink) => {
+const sendOtpEmail = async (email, otp) => {
   let transporter = nodemailer.createTransport({
     service: "gmail", // Replace with your email service like SendGrid or Gmail
     auth: {
@@ -13,11 +13,11 @@ const sendVerificationEmail = async (email, verificationLink) => {
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: email,
-    subject: "Email Verification",
-    html: `<p>Click on the following link to verify your email: <a href="${verificationLink}">Verify Email</a></p>`,
+    subject: "Your OTP for Email Verification",
+    html: `<p>Your OTP for email verification is: <strong>${otp}</strong></p><p>Please enter this OTP to verify your email.</p>`,
   };
 
   await transporter.sendMail(mailOptions);
 };
 
-module.exports = sendVerificationEmail;
+module.exports = sendOtpEmail;

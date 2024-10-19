@@ -2,7 +2,7 @@ const twilio = require("twilio"); // Twilio module for SMS service
 const Company = require("../models/company");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const sendVerificationEmail = require("../utils/emailVerification");
+const sendOtpEmail = require("../utils/emailVerification");
 const otpGenerator = require("otp-generator");
 
 // Initialize Twilio with account SID and auth token
@@ -12,9 +12,9 @@ const client = new twilio(
 );
 
 // In-memory storage for OTPs (use a proper database in production)
-let otpStore = {};
+let otpStore = {}; // Adjust import as necessary
+// Adjust import as necessary
 
-// Registration
 exports.registerCompany = async (req, res) => {
   try {
     const { name, companySize, email, password, contactNumber } = req.body;
@@ -25,24 +25,29 @@ exports.registerCompany = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generate a 6-digit OTP
     const company = new Company({
       name,
       companySize,
       email,
       password: hashedPassword,
       contactNumber,
+      otp, // Store OTP temporarily in the company document
     });
 
-    const verificationLink = `http://localhost:5000/verify-email/${company._id}`;
-    await sendVerificationEmail(email, verificationLink);
+    // Send OTP via email
+    await sendOtpEmail(email, otp);
     await company.save();
+
     const token = jwt.sign({ id: company._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
+
     res.status(201).json({
-      message: "Company registered. Verify your email to continue.",
+      message:
+        "Company registered. Please check your email for the OTP to verify your email address.",
       companyId: company._id,
-      token:token
+      token: token,
     });
   } catch (error) {
     console.log("register----" + error);
@@ -50,24 +55,32 @@ exports.registerCompany = async (req, res) => {
   }
 };
 
-// Email verification
+// Email verification with OTP
 exports.verifyEmail = async (req, res) => {
   try {
     const { companyId } = req.params;
+    const { otp } = req.body; // Expecting OTP in request body
     const company = await Company.findById(companyId);
 
+    console.log("email--- " + company.otp);
     if (!company) {
       return res.status(404).json({ message: "Company not found" });
     }
 
-    company.isEmailVerified = true;
-    await company.save();
+    // Check if the provided OTP matches
+    if (company.otp === otp) {
+      company.isEmailVerified = true;
+      company.otp = null; // Clear the OTP after successful verification
+      await company.save();
 
-    res.status(200).json({
-      message: "Email verified successfully.",
-      isEmailVerified: company.isEmailVerified,
-      isPhoneVerified: company.isPhoneVerified,
-    });
+      res.status(200).json({
+        message: "Email verified successfully.",
+        isEmailVerified: company.isEmailVerified,
+        isPhoneVerified: company.isPhoneVerified,
+      });
+    } else {
+      res.status(400).json({ message: "Invalid OTP." });
+    }
   } catch (error) {
     console.log("email--- " + error);
     res.status(500).json({ message: "Server error", error });

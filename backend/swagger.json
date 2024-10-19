@@ -52,9 +52,9 @@
       }
     },
     "/verify-email/{companyId}": {
-      "get": {
+      "post": {
         "summary": "Verify company email",
-        "description": "Verifies the company's email address.",
+        "description": "Verifies the company's email address using the provided OTP.",
         "tags": ["Auth"],
         "parameters": [
           {
@@ -66,12 +66,29 @@
             }
           }
         ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "otp": { "type": "string" }
+                },
+                "required": ["otp"]
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Email verified successfully."
           },
           "404": {
             "description": "Company not found."
+          },
+          "400": {
+            "description": "Invalid OTP."
           }
         }
       }

@@ -9,6 +9,7 @@ const companySchema = new mongoose.Schema({
   contactNumber: { type: String, required: true },
   isEmailVerified: { type: Boolean, default: false },
   isPhoneVerified: { type: Boolean, default: false },
+  otp: { type: String, default: false },
 });
 
 // Password hashing

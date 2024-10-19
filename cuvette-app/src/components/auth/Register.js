@@ -8,7 +8,6 @@ import axios from "axios";
 import { AppContext } from "../../App";
 import { Navigate } from "react-router-dom";
 
-
 const Register = ({ triggerToast }) => {
   const context = useContext(AppContext);
 
