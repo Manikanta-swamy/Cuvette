@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family:-apple-system,  "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+code 
+{
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* .gradient-color{
+   linear-gradient(90deg, #3F71FF 0%, #AA54FF 100%);
+} */
