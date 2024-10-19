@@ -1,0 +1,311 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Company Registration and Job Posting API",
+    "description": "API for company registration, email and phone verification, login, logout, and job posting.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/register": {
+      "post": {
+        "summary": "Register a new company",
+        "description": "Registers a company by providing basic details like name, company size, email, password, and contact number.",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "companySize": { "type": "string" },
+                  "email": { "type": "string" },
+                  "password": { "type": "string" },
+                  "contactNumber": { "type": "string" }
+                },
+                "required": [
+                  "name",
+                  "companySize",
+                  "email",
+                  "password",
+                  "contactNumber"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Company registered. Verify your email to continue."
+          },
+          "400": {
+            "description": "Email already exists."
+          }
+        }
+      }
+    },
+    "/verify-email/{companyId}": {
+      "get": {
+        "summary": "Verify company email",
+        "description": "Verifies the company's email address.",
+        "tags": ["Auth"],
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email verified successfully."
+          },
+          "404": {
+            "description": "Company not found."
+          }
+        }
+      }
+    },
+    "/phone-otp/{companyId}": {
+      "post": {
+        "summary": "Send phone OTP",
+        "description": "Sends OTP to the company's phone number for verification.",
+        "tags": ["Auth"],
+        "parameters": [
+          {
+            "name": "companyId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OTP sent to phone number."
+          },
+          "400": {
+            "description": "Please verify your email first."
+          }
+        }
+      }
+    },
+    "/verify-phone": {
+      "post": {
+        "summary": "Verify phone OTP",
+        "description": "Verifies the OTP sent to the phone number.",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyId": { "type": "string" },
+                  "otp": { "type": "string" }
+                },
+                "required": ["companyId", "otp"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Phone number verified successfully."
+          },
+          "404": {
+            "description": "Company not found."
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "summary": "Company login",
+        "description": "Logs in a company using email and password.",
+        "tags": ["Auth"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": { "type": "string" },
+                    "company": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "string" },
+                        "name": { "type": "string" },
+                        "email": { "type": "string" },
+                        "isEmailVerified": { "type": "boolean" },
+                        "isPhoneVerified": { "type": "boolean" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials."
+          },
+          "403": {
+            "description": "Please verify your email and phone number."
+          }
+        }
+      }
+    },
+    "/logout": {
+      "get": {
+        "summary": "Company logout",
+        "description": "Logs out a company by clearing the token on the client side.",
+        "tags": ["Auth"],
+        "responses": {
+          "200": {
+            "description": "Logout successful."
+          }
+        }
+      }
+    },
+    "/jobs/post-jobs": {
+      "post": {
+        "summary": "Post a job",
+        "description": "Allows an authenticated company to post jobs by providing job details.",
+        "tags": ["Job"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": { "type": "string" },
+                  "description": { "type": "string" },
+                  "experience": { "type": "string" },
+                  "candidateMails": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  },
+                  "endDate": { "type": "string", "format": "date" }
+                },
+                "required": [
+                  "title",
+                  "description",
+                  "experience",
+                  "candidateMails",
+                  "endDate"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Job posted successfully."
+          },
+          "401": {
+            "description": "Unauthorized."
+          }
+        }
+      }
+    },
+    "/jobs": {
+      "get": {
+        "summary": "List all jobs posted by the company",
+        "description": "Fetches all jobs that have been posted by the authenticated company.",
+        "tags": ["Job"],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved jobs list.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": { "type": "string" },
+                      "title": { "type": "string" },
+                      "description": { "type": "string" },
+                      "experience": { "type": "string" },
+                      "candidateMails": {
+                        "type": "array",
+                        "items": { "type": "string" }
+                      },
+                      "endDate": { "type": "string", "format": "date" },
+                      "company": {
+                        "type": "object",
+                        "properties": {
+                          "id": { "type": "string" },
+                          "name": { "type": "string" },
+                          "email": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized."
+          },
+          "404": {
+            "description": "No jobs found for this company."
+          },
+          "500": {
+            "description": "Failed to retrieve jobs."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
