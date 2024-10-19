@@ -15,7 +15,7 @@ const JobsHome = () => {
         },
       };
       try {
-        const response = await axios.get("http://localhost:5000/jobs", config);
+        const response = await axios.get("https://cuvette-20ky.onrender.com/jobs", config);
         setJobs(response.data);
       } catch (error) {
         console.error("Error fetching jobs:", error);

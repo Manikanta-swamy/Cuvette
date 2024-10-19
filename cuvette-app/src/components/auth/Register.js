@@ -33,7 +33,7 @@ const Register = ({ triggerToast }) => {
 
     try {
       // Make the POST request to /register API
-      const response = await axios.post("http://localhost:5000/register", {
+      const response = await axios.post("https://cuvette-20ky.onrender.com/register", {
         name: formData.companyName,
         companySize: formData.companySize,
         email: formData.email,

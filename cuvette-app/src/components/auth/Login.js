@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { FiPhone } from "react-icons/fi";
 import { MdOutlineMailOutline } from "react-icons/md";
-import { FaCheckCircle  } from "react-icons/fa"; // Import the checkmark icon
+import { FaCheckCircle } from "react-icons/fa"; // Import the checkmark icon
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Login = ({ triggerToast }) => {
-  const apiUrl = "http://localhost:5000";
+  const apiUrl = "https://cuvette-20ky.onrender.com";
   const navigate = useNavigate();
 
   const [emailLoading, setEmailLoading] = useState(false);
@@ -83,7 +83,7 @@ const Login = ({ triggerToast }) => {
       triggerToast("Success! Both email and phone are verified.", "success");
       navigate("/dashboard");
     }
-  }, [emailVerified, phoneVerified, navigate,triggerToast]);
+  }, [emailVerified, phoneVerified, navigate, triggerToast]);
 
   return (
     <div className="flex flex-col justify-start p-6 lg:px-8 scale-75 md:scale-100 w-full h-full items-center md:justify-center">
@@ -109,7 +109,7 @@ const Login = ({ triggerToast }) => {
                 />
                 {/* Show checkmark icon if email is verified */}
                 {emailVerified && (
-                  <FaCheckCircle  className="text-green-600 ml-2" />
+                  <FaCheckCircle className="text-green-600 ml-2" />
                 )}
               </div>
               {!emailVerified && (
@@ -138,7 +138,7 @@ const Login = ({ triggerToast }) => {
                 />
                 {/* Show checkmark icon if phone is verified */}
                 {phoneVerified && (
-                  <FaCheckCircle  className="text-green-600 ml-2" />
+                  <FaCheckCircle className="text-green-600 ml-2" />
                 )}
               </div>
 

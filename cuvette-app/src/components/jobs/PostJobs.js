@@ -40,7 +40,7 @@ const PostJobs = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/jobs/post-jobs",
+        "https://cuvette-20ky.onrender.com/jobs/post-jobs",
         dataToSubmit,
         config
       );
