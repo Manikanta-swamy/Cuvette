@@ -85,6 +85,13 @@ const Login = ({ triggerToast }) => {
     }
   }, [emailVerified, phoneVerified, navigate, triggerToast]);
 
+  const token = localStorage.getItem("token");
+
+  // If token exists, redirect to the dashboard
+  if (token) {
+    return navigate("/dashboard");
+  }
+
   return (
     <div className="flex flex-col justify-start p-6 lg:px-8 scale-75 md:scale-100 w-full h-full items-center md:justify-center">
       <div className="flex flex-col items-center justify-center gap-4 border-[1px] border-purple-400 rounded-md p-6">

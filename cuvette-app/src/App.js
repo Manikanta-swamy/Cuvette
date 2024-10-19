@@ -1,6 +1,6 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import Welcomepage from "./components/home/Welcomepage";
-import { createContext } from "react";
+import { createContext} from "react";
 import { useReducer } from "react";
 import PostJobs from "./components/jobs/PostJobs";
 import DashboardLayout from "./components/DashboardLayout";
@@ -26,6 +26,7 @@ const PrivateRoute = ({ children }) => {
 };
 
 function App() {
+
   const initialState = {
     auth: "register", // Initial count or state can be changed according to your requirements
   };

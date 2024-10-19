@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css"; // Import CSS for toast
 import { AppContext } from "../../App";
 
 const Welcomepage = () => {
+  const context = useContext(AppContext);
+
   // Function to trigger toast notifications
   const triggerToast = (message, type = "success") => {
     if (type === "success") {
@@ -15,7 +17,7 @@ const Welcomepage = () => {
       toast.error(message);
     }
   };
-  const context = useContext(AppContext);
+
   return (
     <div className="w-full flex flex-col h-screen">
       <header className="flex py-8 px-12 justify-between">
@@ -32,12 +34,12 @@ const Welcomepage = () => {
           smoothly.
         </p>
         <div className="w-full h-full">
-            {/* Pass the triggerToast function as a prop */}
-            {context.appState.auth === "register" ? (
-              <Register triggerToast={triggerToast} />
-            ) : (
-              <Login  triggerToast={triggerToast}/>
-            )}
+          {/* Pass the triggerToast function as a prop */}
+          {context.appState.auth === "register" ? (
+            <Register triggerToast={triggerToast} />
+          ) : (
+            <Login triggerToast={triggerToast} />
+          )}
         </div>
       </div>
 

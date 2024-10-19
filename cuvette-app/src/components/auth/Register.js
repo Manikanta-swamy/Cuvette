@@ -6,9 +6,12 @@ import { FiPhone } from "react-icons/fi";
 import { PiBuildingApartmentFill } from "react-icons/pi";
 import axios from "axios";
 import { AppContext } from "../../App";
+import { Navigate } from "react-router-dom";
+
 
 const Register = ({ triggerToast }) => {
   const context = useContext(AppContext);
+
   const [formData, setFormData] = useState({
     name: "",
     contactNumber: "",
@@ -18,6 +21,12 @@ const Register = ({ triggerToast }) => {
   });
   const [loading, setLoading] = useState(false); // State to manage loading
 
+  const token = localStorage.getItem("token");
+
+  // If token exists, redirect to the dashboard
+  if (token) {
+    return <Navigate to="/dashboard" />;
+  }
   // Handle input change
   const handleChange = (e) => {
     setFormData({
@@ -33,13 +42,16 @@ const Register = ({ triggerToast }) => {
 
     try {
       // Make the POST request to /register API
-      const response = await axios.post("https://cuvette-20ky.onrender.com/register", {
-        name: formData.companyName,
-        companySize: formData.companySize,
-        email: formData.email,
-        password: "defaultPassword123", // Assuming password isn't handled by the form yet
-        contactNumber: "+91" + formData.contactNumber,
-      });
+      const response = await axios.post(
+        "https://cuvette-20ky.onrender.com/register",
+        {
+          name: formData.companyName,
+          companySize: formData.companySize,
+          email: formData.email,
+          password: "defaultPassword123", // Assuming password isn't handled by the form yet
+          contactNumber: "+91" + formData.contactNumber,
+        }
+      );
       localStorage.setItem("comp_id", response.data.companyId);
       console.log(response.data.token);
       localStorage.setItem("token", response.data.token);
