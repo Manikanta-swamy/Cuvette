@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const PostJobs = () => {
   const token = localStorage.getItem("token");
+  const apiURL = process.env.REACT_APP_BACKEND_API;
   console.log(token);
   const config = {
     headers: {
@@ -40,7 +41,7 @@ const PostJobs = () => {
 
     try {
       const response = await axios.post(
-        "https://cuvette-20ky.onrender.com/jobs/post-jobs",
+        `${apiURL}/jobs/post-jobs`,
         dataToSubmit,
         config
       );

@@ -6,7 +6,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Login = ({ triggerToast }) => {
-  const apiUrl = "https://cuvette-20ky.onrender.com";
+  const apiUrl = process.env.REACT_APP_BACKEND_API;
+
   const navigate = useNavigate();
 
   const [emailLoading, setEmailLoading] = useState(false);
@@ -84,14 +85,13 @@ const Login = ({ triggerToast }) => {
 
   // Effect for navigating upon successful verification
   useEffect(() => {
-    // const token = localStorage.getItem("token");
 
     if (emailVerified && phoneVerified) {
       triggerToast("Success! Both email and phone are verified.", "success");
       localStorage.setItem("token", token);
       navigate("/dashboard");
     }
-  }, [emailVerified, phoneVerified, navigate, triggerToast]);
+  }, [token,emailVerified, phoneVerified, navigate, triggerToast]);
 
   return (
     <div className="flex flex-col justify-start p-6 lg:px-8 scale-75 md:scale-100 w-full h-full items-center md:justify-center">

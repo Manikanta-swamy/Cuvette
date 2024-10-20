@@ -10,6 +10,8 @@ import { Navigate } from "react-router-dom";
 
 const Register = ({ triggerToast }) => {
   const context = useContext(AppContext);
+  const apiURL = process.env.REACT_APP_BACKEND_API;
+  console.log(process.env.REACT_APP_BACKEND_API);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -41,16 +43,13 @@ const Register = ({ triggerToast }) => {
 
     try {
       // Make the POST request to /register API
-      const response = await axios.post(
-        "https://cuvette-20ky.onrender.com/register",
-        {
-          name: formData.companyName,
-          companySize: formData.companySize,
-          email: formData.email,
-          password: "defaultPassword123", // Assuming password isn't handled by the form yet
-          contactNumber: "+91" + formData.contactNumber,
-        }
-      );
+      const response = await axios.post(`${apiURL}/register`, {
+        name: formData.companyName,
+        companySize: formData.companySize,
+        email: formData.email,
+        password: "defaultPassword123", // Assuming password isn't handled by the form yet
+        contactNumber: "+91" + formData.contactNumber,
+      });
       localStorage.setItem("comp_id", response.data.companyId);
       console.log(response.data.token);
 

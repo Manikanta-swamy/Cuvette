@@ -6,6 +6,8 @@ const JobsHome = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [jobs, setJobs] = useState([]);
+  const apiUrl = process.env.REACT_APP_BACKEND_API;
+
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -15,7 +17,7 @@ const JobsHome = () => {
         },
       };
       try {
-        const response = await axios.get("https://cuvette-20ky.onrender.com/jobs", config);
+        const response = await axios.get(`${apiUrl}/jobs`, config);
         setJobs(response.data);
       } catch (error) {
         console.error("Error fetching jobs:", error);
@@ -23,7 +25,7 @@ const JobsHome = () => {
     };
 
     fetchJobs();
-  }, [token]);
+  }, [token,apiUrl]);
 
   return (
     <div className="flex flex-col p-6">
