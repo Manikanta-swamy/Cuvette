@@ -128,7 +128,7 @@ const PostJobs = () => {
             type="text"
             name="candidateEmails"
             id="candidateEmails"
-            placeholder="Enter candidate mails"
+            placeholder="Enter candidate mails comma seperated"
             value={formData.candidateEmails}
             onChange={handleChange}
             required
