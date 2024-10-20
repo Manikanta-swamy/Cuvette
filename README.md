@@ -1,4 +1,4 @@
-# Cuvette Assignment - Job Posting Platform
+```# Cuvette Assignment - Job Posting Platform
 This project allows companies to register, verify their mobile number via OTP, log in, post jobs, and send job alerts to candidates via email. It includes a frontend built with React and a backend with Node.js, Express.js, MongoDB, Twilio for OTP, and Nodemailer for email automation.
 ## Prerequisites
 Before setting up the project, ensure you have the following:
@@ -8,7 +8,7 @@ Before setting up the project, ensure you have the following:
 4. **Google App Password** for secure email automation using Gmail.
 ## Setup Instructions
 ### 1. Clone the Repository
-```bash\ngit clone https://github.com/your-username/cuvette-assignment.git\ncd cuvette-assignment\n```
+```git clone https://github.com/your-username/cuvette-assignment.git\ncd cuvette-assignment```
 ### 2. Create a MongoDB Atlas Account
 1. Visit [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) and create a free account.
 2. Create a new cluster and get the **MongoDB connection string**.
@@ -23,4 +23,4 @@ Before setting up the project, ensure you have the following:
 ### 7. Run the Backend\n\n```bash\ncd backend\nnpm start\n```\n\n
 ### 8. Run the Frontend\n\n```bash\ncd frontend\nnpm start\n```\n\n
 ### 9. Access the Platform\n\nOpen your browser and navigate to `http://localhost:3000` to access the platform.\n\n
-## Important Notes\n\n- Ensure both Twilio and Google App Password are set up correctly for OTP and email automation to work.\n- Ensure MongoDB Atlas is running and your IP address is whitelisted.\n
+## Important Notes\n\n- Ensure both Twilio and Google App Password are set up correctly for OTP and email automation to work.\n- Ensure MongoDB Atlas is running and your IP address is whitelisted.\n```
