@@ -59,5 +59,6 @@ Create a `.env` file in the `cuvette-app` folder and add the following:
    Open your browser and navigate to `http://localhost:3000` to access the platform.
 
 ## Important Notes
+- please ensure that while entering the OTP the number should be added by the operator or the server to get OTP or the number should be verified by twilio as its a developer account. 
 - Ensure both Twilio and Google App Password are set up correctly for OTP and email automation to work.
 - Ensure MongoDB Atlas is running and your IP address is whitelisted.
