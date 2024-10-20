@@ -16,8 +16,15 @@ Before setting up the project, ensure you have the following:
    -    ```plaintext\n   mongodb+srv://<username>:<password>@cluster0.mongodb.net/mydatabase?retryWrites=true&w=majority\n   ```
 3. Replace `<username>`, `<password>`, and `mydatabase` with your own values.
 4. Add your IP address to the IP whitelist in MongoDB Atlas.
-### 3. Set Up Twilio for OTP Verification\n\n1. Visit [Twilio](https://www.twilio.com/) and sign up for a free account.\n2. Get your **Account SID**, **Auth Token**, and **Twilio Phone Number** from the Twilio dashboard.\n3. Verify your phone number in Twilio if you're using a trial account.\n\n
-### 4. Create a Google App Password\n\n1. Go to your [Google Account Security](https://myaccount.google.com/security) page.\n2. Under \"Signing in to Google,\" select **App Passwords**.\n3. Generate a new App Password and use it to allow Nodemailer to send emails via Gmail.\n   - More information can be found in the [Google App Password Guide](https://support.google.com/accounts/answer/185833?hl=en).\n\n
+### 3. Set Up Twilio for OTP Verification
+   1. Visit [Twilio](https://www.twilio.com/) and sign up for a free account.
+   2. Get your **Account SID**, **Auth Token**, and **Twilio Phone Number** from the Twilio dashboard.
+   3. Verify your phone number in Twilio if you're using a trial account.
+### 4. Create a Google App Password
+   1. Go to your [Google Account Security](https://myaccount.google.com/security) page.
+   2. Under \"Signing in to Google,\" select **App Passwords**.
+   3. Generate a new App Password and use it to allow Nodemailer to send emails via Gmail.
+  - More information can be found in the [Google App Password Guide](https://support.google.com/accounts/answer/185833?hl=en).
 ### 5. Set Up Environment Variables\n\nCreate a `.env` file in the `backend` folder and add the following:
 ```
    # MongoDB URI
