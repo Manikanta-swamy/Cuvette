@@ -25,7 +25,8 @@ Before setting up the project, ensure you have the following:
    2. Under \"Signing in to Google,\" select **App Passwords**.
    3. Generate a new App Password and use it to allow Nodemailer to send emails via Gmail.
   - More information can be found in the [Google App Password Guide](https://support.google.com/accounts/answer/185833?hl=en).
-### 5. Set Up Environment Variables\n\nCreate a `.env` file in the `backend` folder and add the following:
+### 5. Set Up Environment Variables
+Create a `.env` file in the `backend` folder and add the following:
 ```
    # MongoDB URI
    MONGODB_URI=your-mongodb-atlas-uri
@@ -39,6 +40,11 @@ Before setting up the project, ensure you have the following:
    TWILIO_ACCOUNT_SID=your-twilio-account-sid
    TWILIO_AUTH_TOKEN=your-twilio-auth-token
    TWILIO_PHONE_NUMBER=your-twilio-phone-number
+```
+Create a `.env` file in the `cuvette-app` folder and add the following:
+```
+   # BACKEND URI
+   REACT_APP_BACKEND_API=your-backend-api-link
 ```
 ### 6. Install Dependencies
    For the backend:
