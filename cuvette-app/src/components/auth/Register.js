@@ -53,7 +53,6 @@ const Register = ({ triggerToast }) => {
       );
       localStorage.setItem("comp_id", response.data.companyId);
       console.log(response.data.token);
-      localStorage.setItem("token", response.data.token);
 
       // console.log(response.data.token);
 

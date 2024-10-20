@@ -17,7 +17,7 @@ const Login = ({ triggerToast }) => {
   const [emailVerified, setEmailVerified] = useState(false);
   const [phoneVerified, setPhoneVerified] = useState(false);
   const [otpGenerated, setOtpGenerated] = useState(false);
-
+  const [token, setToken] = useState("");
   const companyId = localStorage.getItem("comp_id");
 
   console.log(emailOTP);
@@ -68,6 +68,7 @@ const Login = ({ triggerToast }) => {
         });
         if (response.data.isPhoneVerified) {
           setPhoneVerified(true);
+          setToken(response.data.token);
           triggerToast("Phone verified successfully!", "success");
         } else {
           triggerToast("Failed to verify phone.", "error");
@@ -87,6 +88,7 @@ const Login = ({ triggerToast }) => {
 
     if (emailVerified && phoneVerified) {
       triggerToast("Success! Both email and phone are verified.", "success");
+      localStorage.setItem("token", token);
       navigate("/dashboard");
     }
   }, [emailVerified, phoneVerified, navigate, triggerToast]);

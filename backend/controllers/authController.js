@@ -39,10 +39,6 @@ exports.registerCompany = async (req, res) => {
     await sendOtpEmail(email, otp);
     await company.save();
 
-    const token = jwt.sign({ id: company._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
-    });
-
     res.status(201).json({
       message:
         "Company registered. Please check your email for the OTP to verify your email address.",
@@ -142,11 +138,15 @@ exports.verifyPhoneOtp = async (req, res) => {
 
     // Remove OTP from store after successful verification
     delete otpStore[companyId];
+    const token = jwt.sign({ id: company._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
     res.status(200).json({
       message: "Phone number verified successfully.",
       isEmailVerified: company.isEmailVerified,
       isPhoneVerified: company.isPhoneVerified,
+      token: token,
     });
   } catch (error) {
     console.log("otp check phone :  " + error);
