@@ -6,7 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Login = ({ triggerToast }) => {
-  const apiUrl = "https://cuvette-20ky.onrender.com/";
+  const apiUrl = "https://cuvette-20ky.onrender.com";
   const navigate = useNavigate();
 
   const [emailLoading, setEmailLoading] = useState(false);
