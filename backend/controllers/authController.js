@@ -42,8 +42,7 @@ exports.registerCompany = async (req, res) => {
     res.status(201).json({
       message:
         "Company registered. Please check your email for the OTP to verify your email address.",
-      companyId: company._id,
-      token: token,
+      companyId: company._id
     });
   } catch (error) {
     console.log("register----" + error);
