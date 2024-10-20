@@ -32,7 +32,9 @@ Before setting up the project, ensure you have the following:
    # JWT Secret for Authentication
    JWT_SECRET=your-jwt-secret
    # Nodemailer Configuration (Google App Password)
-   EMAIL_SERVICE=gmail\nEMAIL_USER=your-email@gmail.com\nEMAIL_PASS=your-google-app-password
+   EMAIL_HOST=gmail
+   EMAIL_USER=your-email@gmail.com
+   EMAIL_PASS=your-google-app-password
    # Twilio Configuration
    TWILIO_ACCOUNT_SID=your-twilio-account-sid
    TWILIO_AUTH_TOKEN=your-twilio-auth-token
