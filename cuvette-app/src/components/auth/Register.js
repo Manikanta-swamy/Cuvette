@@ -11,7 +11,6 @@ import { Navigate } from "react-router-dom";
 const Register = ({ triggerToast }) => {
   const context = useContext(AppContext);
   const apiURL = process.env.REACT_APP_BACKEND_API;
-  console.log(process.env.REACT_APP_BACKEND_API);
 
   const [formData, setFormData] = useState({
     name: "",
